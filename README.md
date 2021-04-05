@@ -18,7 +18,7 @@ There are two possible ways to submit your project. Your instructor should have 
 - [ ] Open the assignment in Canvas and click on the "Set up git" option.
 - [ ] Follow instructions to set up Codegrade's Webhook and Deploy Key.
 - [ ] Push your first commit: `git commit --allow-empty -m "first commit" && git push`.
-- [ ] Check to see that Codegrade has accepted your git submssion..
+- [ ] Check to see that Codegrade has accepted your git submssion.
 
 #### Option B - Pull Request
 
@@ -31,7 +31,7 @@ There are two possible ways to submit your project. Your instructor should have 
 
 Use Node.js and Express to build an API that performs CRUD operations on users.
 
-- Add a `server` script to the `package.json` that runs the API using `nodemon`.
+[x] Add a `server` script to the `package.json` that runs the API using `nodemon`.
 
 ### Write endpoints
 
@@ -61,7 +61,8 @@ Each User _resource_ should conform to the following structure (AKA schema):
 
 You can find them inside `api/users/model.js`. All of these functions return Promises.
 
-- `find` Resolves to the list of users (or empty array).
+[x] `find` Resolves to the list of users (or empty array).
+
 - `findById` Takes an `id` and resolves to the user with that id (or null if the id does not exist).
 - `insert` Takes a new user `{ name, bio }` and resolves to the the newly created user `{ id, name, bio }`.
 - `update` Takes an `id` and an existing user `{ name, bio }` and resolves the updated user `{ id, name, bio}` (or null if the id does not exist).
@@ -88,20 +89,20 @@ When the client makes a `POST` request to `/api/users`:
 
 When the client makes a `GET` request to `/api/users`:
 
-- If there's an error in retrieving the _users_ from the database:
-  - respond with HTTP status code `500`.
-  - return the following JSON object: `{ message: "The users information could not be retrieved" }`.
+[x] If there's an error in retrieving the _users_ from the database:
+[x] respond with HTTP status code `500`.
+[x] return the following JSON object: `{ message: "The users information could not be retrieved" }`.
 
 When the client makes a `GET` request to `/api/users/:id`:
 
 - If the _user_ with the specified `id` is not found:
 
-  - respond with HTTP status code `404` (Not Found).
-  - return the following JSON object: `{ message: "The user with the specified ID does not exist" }`.
+  [x] respond with HTTP status code `404` (Not Found).
+  [x] return the following JSON object: `{ message: "The user with the specified ID does not exist" }`.
 
 - If there's an error in retrieving the _user_ from the database:
-  - respond with HTTP status code `500`.
-  - return the following JSON object: `{ message: "The user information could not be retrieved" }`.
+  [x] respond with HTTP status code `500`.
+  [x] return the following JSON object: `{ message: "The user information could not be retrieved" }`.
 
 When the client makes a `DELETE` request to `/api/users/:id`:
 
