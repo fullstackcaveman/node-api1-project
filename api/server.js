@@ -1,6 +1,6 @@
 // BUILD YOUR SERVER HERE
 const express = require('express');
-const { find, findById, insert } = require('./users/model');
+const { find, findById, insert, update } = require('./users/model');
 
 // Instance
 const server = express();
@@ -67,12 +67,40 @@ server.post('/api/users', (req, res) => {
 			})
 			.catch((err) => {
 				console.log(err.message);
-				res
-					.status(500)
-					.json({
-						message: 'There was an error while saving the user to the database',
-					});
+				res.status(500).json({
+					message: 'There was an error while saving the user to the database',
+				});
 			});
+	}
+});
+
+// @desc   Update a user
+// @route  POST /api/users/:id
+// @access Public
+server.put('/api/users/:id', async (req, res) => {
+	const id = req.params.id;
+	const userChanges = req.body;
+
+	try {
+		if (!userChanges.name || !userChanges.bio) {
+			res
+				.status(400)
+				.json({ message: 'Please provide name and bio for the user' });
+		} else {
+			const updatedUser = await update(id, userChanges);
+			if (!updatedUser) {
+				res
+					.status(404)
+					.json({ message: 'The user with the specified ID does not exist' });
+			} else {
+				res.status(201).json(updatedUser);
+			}
+		}
+	} catch (err) {
+		console.log(err.message);
+		res
+			.status(500)
+			.json({ message: 'The user information could not be modified' });
 	}
 });
 
