@@ -1,6 +1,6 @@
 // BUILD YOUR SERVER HERE
 const express = require('express');
-const { find, findById } = require('./users/model');
+const { find, findById, insert } = require('./users/model');
 
 // Instance
 const server = express();
@@ -48,6 +48,32 @@ server.get('/api/users/:id', (req, res) => {
 				.status(500)
 				.json({ message: 'The user information could not be retrieved' });
 		});
+});
+
+// @desc   Create new user
+// @route  POST /api/users
+// @access Public
+server.post('/api/users', (req, res) => {
+	const newUser = req.body;
+
+	if (!newUser.name || !newUser.bio) {
+		res
+			.status(400)
+			.json({ message: 'Please provide name and bio for the user' });
+	} else {
+		insert(newUser)
+			.then((user) => {
+				res.status(201).json(user);
+			})
+			.catch((err) => {
+				console.log(err.message);
+				res
+					.status(500)
+					.json({
+						message: 'There was an error while saving the user to the database',
+					});
+			});
+	}
 });
 
 module.exports = server; // EXPORT YOUR SERVER instead of {}
