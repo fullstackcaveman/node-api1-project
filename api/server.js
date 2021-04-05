@@ -1,6 +1,6 @@
 // BUILD YOUR SERVER HERE
 const express = require('express');
-const { find, findById, insert, update } = require('./users/model');
+const { find, findById, insert, update, remove } = require('./users/model');
 
 // Instance
 const server = express();
@@ -101,6 +101,26 @@ server.put('/api/users/:id', async (req, res) => {
 		res
 			.status(500)
 			.json({ message: 'The user information could not be modified' });
+	}
+});
+
+// @desc   Delete a user
+// @route  DELETE /api/users/:id
+// @access Public
+server.delete('/api/users/:id', async (req, res) => {
+	try {
+		const id = req.params.id;
+		const deletedUser = await remove(id);
+
+		if (!deletedUser) {
+			res
+				.status(404)
+				.json({ message: 'The user with the specified ID does not exist' });
+		} else {
+			res.status(201).json(deletedUser);
+		}
+	} catch (err) {
+		res.status(500).json({ message: 'The user could not be removed' });
 	}
 });
 
